@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewBag.Title = "Index";
+   
+    //string ImagePath = "~/images/" + Model.Employee.PhotoPath ?? "~/images/1.jpg";
+
+}
+
+
+    <div class="row ">
+        <div class="card-deck">
+            @foreach (var Employee in Model)
+            {
+                string ImagePath = "~/images/" + (Employee.PhotoPath ?? "1.jpg");
+
+                <div class="card  col-md-4">
+                    <div class=" card-header">
+                        <h1>@Employee.Name</h1>
+                    </div>
+                    <img class="card-img-top img-thumbnail imgage-thumbnail" src="@ImagePath" asp-append-version="true" />
+                    <div class="card-footer text-center">
+                        @*@Html.ActionLink("View","Details","Home",new { id=Employee.Id});*@
+                        <a class="btn btn-primary m-1" asp-action="Details" asp-controller="Home" asp-route-id="@Employee.Id">View</a>
+                        <a class="btn btn-primary m-1" asp-action="Edit" asp-controller="Home" asp-route-id="@Employee.Id">Edit</a>
+                        <a class="btn btn-danger m-1" href="#">Delete</a>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+@section Script
+{
+    <script src="~/CustomScript.js"></script>
+}

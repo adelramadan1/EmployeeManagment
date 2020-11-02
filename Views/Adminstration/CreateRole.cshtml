@@ -1,0 +1,37 @@
+﻿@model RoleCreateViewModel
+@{
+
+    ViewBag.Title = "Create Role";
+}
+<h1>User Registration</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-action="CreateRole" asp-controller="Adminstration">
+            <div class="text-danger" asp-validation-summary="All"> </div>
+            <div class="form-group">
+                <label asp-for="RoleName"></label>
+                <input id="RoleName" type="text" asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+           
+            @*<input type="text" id="IsCreated" value="@ViewBag.Inserted" />*@
+
+           
+            <button type="submit" id="CreateRole" class="btn btn-primary" style="width:auto">Create Role</button>
+        </form>
+    </div>
+</div>
+@section script
+{
+<script>
+    //$(document).ready(function () {
+    //    $("#CreateRole").click(function () {
+    //        $("#RoleName").val("");
+    //        if ($("#IsCreated").val() != null) {
+    //            alert($("#RoleName").val());
+
+    //        }
+    //    });
+    //});
+</script>
+}

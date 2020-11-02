@@ -1,0 +1,86 @@
+﻿@model EditUserViewModel
+@{ 
+    ViewBag.Title = "Edit User";
+}
+<h1>Edit User</h1>
+<form method="post" class=" mt-3">
+    <div class="form-group row ">
+        <label asp-for="Id" class="col-sm-2 col-form-label "></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row ">
+        <label asp-for="Username" class="col-form-label col-sm-2"></label>
+        <div class="col-sm-10">
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row ">
+        <label asp-for="Email" class="col-form-label col-sm-2"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row ">
+        <label asp-for="City" class="col-form-label col-sm-2"></label>
+        <div class="col-sm-10">
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="text-danger" asp-validation-summary="All"></div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button class="btn btn-primary" asp-action="EditUser" asp-controller="Adminstration">Update</button>
+            <a class="btn btn-primary" asp-action="ListUsers" asp-controller="Adminstration">Cancel</a>
+        </div>
+
+    </div>
+</form>
+<div class="card mt-3">
+    <div class="card-header">
+        <h2>User Roles</h2>
+    </div>
+    <div class="card-body">
+        @if (Model.UserRoles.Any())
+        {
+            foreach (var role in Model.UserRoles)
+            {
+                <h4>@role</h4>
+            }
+        }
+        else
+        {
+            <h4 class="card-title">No at the moment</h4>
+        }
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary" style="width:auto" asp-action="ManageUserRoles" 
+           asp-route-userid="@Model.Id">Manage Roles</a>
+    </div>
+</div>
+<div class="card mt-3">
+    <div class="card-header">
+        <h2>User Clamis</h2>
+    </div>
+    <div class="card-body">
+        @if (Model.UserClaims.Any())
+        {
+            foreach (var claim in Model.UserClaims)
+            {
+                <h4>@claim</h4>
+            }
+        }
+        else
+        {
+            <h4 class="card-title">No at the moment</h4>
+        }
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-primary" style="width:auto" asp-action="ManageUserClaims"
+           asp-route-userid="@Model.Id">Manage Claims</a>
+    </div>
+</div>

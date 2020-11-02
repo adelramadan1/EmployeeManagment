@@ -1,0 +1,83 @@
+﻿@model IEnumerable<IdentityRole>;
+@using Microsoft.AspNetCore.Authorization;
+@inject IAuthorizationService  authorizationService ;
+@{
+    ViewBag.Title = "All Roles";
+}
+<h1>All Roles</h1>
+@if (Model.Any())
+{
+    <a class="btn btn-primary" asp-action="CreateRole" asp-controller="Adminstration" style="width:auto">Add New Role</a>
+
+    foreach (var role in Model)
+    {
+        <div class="card mt-3">
+            <div class="card-header">
+                @role.Id
+            </div>
+            <div class="card-body">
+                <div class="card-title">
+                    <h5>@role.Name</h5>
+                </div>
+            </div>
+            <div class="card-footer">
+                <form method="post" asp-action="DeleteRole" asp-route-id="@role.Id">
+                    @if ((await authorizationService.AuthorizeAsync(User, "EditPolicy")).Succeeded)
+                    {
+                        <a class="btn btn-primary" asp-action="EditRole" asp-controller="Adminstration" asp-route-id="@role.Id">Edit </a>
+
+                    }
+                    <span id="confirmdetetespan+@role.Id" style="display:block">
+                        <span>Are you sure want to delete the role</span>
+                        <a class="btn btn-primary" onclick="CofirmDelete(@role.Id,false)">No</a>
+                        <button type="submit" class="btn btn-danger">Yes</button>
+                    </span>
+                    <span id="deletespan+@role.Id">
+                        <a class="btn btn-danger" onclick="CofirmDelete(@role.Id, true)">Delete</a>
+                    </span>
+
+                </form>
+
+
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">No Roles Created yet</div>
+        <div class="card-body">
+            <div class="card-title">
+                <h5>Use the button below to create a role</h5>
+                <a class="btn btn-primary" asp-action="CreateRole" asp-controller="Adminstration">Create Role</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Script
+{
+
+    @*<script src="~/CustomScript.js"></script>*@
+    <script>
+        function ConfirmDelete(UniqueId, IsTrue) {
+            var deleteSpan = 'deletespan_' + UniqueId;
+            var confirmDeteteSpan = 'confirmdeletespan_' + UniqueId;
+
+            if (IsTrue) {
+                $('#' + deleteSpan).hide();
+                $('#' + confirmDeteteSpan).show();
+
+            }
+            else {
+                $('#' + deleteSpan).show();
+                $('#' + confirmDeteteSpan).hide();
+            }
+
+        }
+    </script>
+
+
+}
